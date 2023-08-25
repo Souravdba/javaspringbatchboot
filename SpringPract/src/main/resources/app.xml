@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="an" class="com.swso.Engine" >
+    <property name="octane" value="120"/>
+    <property name="manufacture" value="Ford"/>
+    </bean>
+	<bean id="veh" class="com.swso.Vehicle">
+	<property name="wheal" value="4"/>
+	<property name="door" value="4"/>
+<!-- 	<property name="an"/> -->
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+</beans>

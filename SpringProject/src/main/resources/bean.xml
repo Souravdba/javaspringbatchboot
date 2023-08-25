@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+   
+   <bean id = "addre1" class = "com.sou.Address">
+      <property name = "City" value = "Ctc"/>
+      <property name = "State" value = "ORISSA"/>
+      <property name = "zipCode" value = "76767"/>
+      
+   </bean>
+   <bean id = "Employee1" class = "com.sou.Employee">
+      <property name = "id" value = "20"/>
+      <property name = "name" value = "Hello"/>
+      <property name = "sal" value = "2000"/>
+<!--       <constructor-arg ref="addre1"/> -->
+      <property name="addrs" ref="addre1"/>
+      
+   </bean>
+   
+</beans>

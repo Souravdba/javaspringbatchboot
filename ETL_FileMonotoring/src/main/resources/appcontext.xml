@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd"> 
+     <context:component-scan base-package="com.ee" />
+
+	<bean name="anotherJob" class="com.ee.FileMonJob">
+	</bean>
+
+<!-- 	<bean name="hiveImportJob" class="HiveImportJob"> -->
+<!-- 	</bean> -->
+
+	<bean name="complexJobDetail"
+		class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="ScheduledJob" />
+		<property name="jobDataMap">
+			<map>
+				<entry key="anotherBean" value-ref="anotherJob" />
+			</map>
+		</property>
+		<property name="durability" value="true" />
+	</bean>
+
+
+	<bean name="complexJobDetail1"
+		class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="HiveImportJob" />
+		<property name="jobDataMap">
+			<map>
+				<entry key="HiveBean" value-ref="hiveImportJob" />
+			</map>
+		</property>
+		<property name="durability" value="true" />
+	</bean>
+
+
+	<bean id="cronTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="complexJobDetail" />
+		<property name="cronExpression" value="0/60 * * ? * *" />
+	</bean>
+
+
+	<bean id="cronTrigger1"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="complexJobDetail1" />
+		<property name="cronExpression" value="0/60 * * ? * *" />
+	</bean>
+
+	<bean name="SchedulerFactory"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="complexJobDetail" />
+				<ref bean="complexJobDetail1" />
+			</list>
+		</property>
+
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger" />
+				<ref bean="cronTrigger1" />
+			</list>
+		</property>
+	</bean>
+	
+<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+</beans>

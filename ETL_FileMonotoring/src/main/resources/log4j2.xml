@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+<Properties>
+        <Property name="basePath">C:\\Users\\Sourav\\Documents\\HadoopClient\Job\\Log</Property>
+    </Properties>
+	<Appenders>
+		<RollingFile name="fileLogger" fileName="${basePath}/EtlDriver.log" filePattern="${basePath}/EtlDriver-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+
+	</Appenders>
+
+	<Loggers>
+		<Root level="debug">
+			<AppenderRef ref="fileLogger" />
+		</Root>
+		<Logger name="com.utilities" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
+        </Logger>
+        
+        <Logger name="com.ee" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
+        </Logger>
+        
+	</Loggers>
+</Configuration>
